@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 
 public interface MemberRepository extends JpaRepository<Member, Integer>{
-	@Query("select m from Member m where m.email like :x")
-	public Member findByEmail(@Param("x")String email);
+	public Member findByEmail(String email);
 	public List<Member> findByRolesContaining(Role role);
+	Member findByConfirmationToken(String confirmationToken);
 }

@@ -49,6 +49,7 @@ public class MemberServiceImpl implements MemberService{
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
 		Role studentRole = roleService.findRoleByName(RoleService.STUDENT);
 		member.addRole(studentRole);
+		member.setEnabled(false);
 		return repository.save(member);
 	}
 	
@@ -69,5 +70,15 @@ public class MemberServiceImpl implements MemberService{
 	public List<Member> findTeachers() {
 		Role role = roleService.findRoleByName(RoleService.TEACHER);
 		return repository.findByRolesContaining(role);
+	}
+	
+	@Override
+	public Member save(Member member) {
+		return repository.save(member);
+	}
+	
+	@Override
+	public Member findByConfirmationToken(String confirmation) {
+		return repository.findByConfirmationToken(confirmation);
 	}
 }

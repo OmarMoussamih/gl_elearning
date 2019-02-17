@@ -12,4 +12,6 @@ public interface MemberService extends UserDetailsService{
 	boolean emailExist(String email);
 	boolean setRole(Member member,Role role);
 	List<Member> findTeachers();
+	Member save(Member member);
+	Member findByConfirmationToken(String confirmation);
 }

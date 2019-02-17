@@ -8,19 +8,22 @@ import org.mql.dao.MemberRepository;
 import org.mql.dao.ModuleRepository;
 import org.mql.dao.StreamingRepository;
 import org.mql.dao.TimingRepository;
+import org.mql.models.Category;
 import org.mql.models.Formation;
 import org.mql.models.Member;
 import org.mql.models.Module;
+import org.mql.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class TestController {
+public class MainController {
 	@Autowired
 	FormationRepository formationRepository;
 
@@ -36,73 +39,66 @@ public class TestController {
 	@Autowired
 	TimingRepository timingRepository;
 
-	
+	@Autowired
+	CategoryService categoryService;
+
 	@GetMapping(path = "/security")
 	public String addNewMember() {
 		return "dashboard/index";
 	}
-	
-	/******************added*///////////////////
+
+	/****************** added *///////////////////
 	@GetMapping("/teacher/{id}")
-	public  String showStream(@PathVariable int id , Model model) {
+	public String showStream(@PathVariable int id, Model model) {
 		Member member = memberRepository.findById(id).get();
-		model.addAttribute("member",member);
+		model.addAttribute("member", member);
 		return "main_views/teacher-detail";
 
 	}
-	// 
+
+	//
 	@GetMapping("/")
 	public String home() {
 		return "main_views/home";
 	}
-	
+
 	@GetMapping("/articles")
 	public String articles() {
 		return "main_views/articles";
 	}
-	
+
 	@GetMapping("/contacts")
 	public String contacts() {
 		return "main_views/contacts";
 	}
-	
 
-	@GetMapping("/register")
+	@GetMapping("/register2")
 	public String register() {
 		return "main_views/register";
 	}
-	
-	@GetMapping(path = "/allMembers")
-	public @ResponseBody String getAllMembers() {
-		return memberRepository.findAll().toString();
+
+	@GetMapping("/register")
+	public String register2(Model model) {
+		List<Category> categories = categoryService.findAll();
+		System.out.println(categories.get(0));
+		model.addAttribute("categories", categories);
+		return "admission/admission2";
 	}
 
-	@GetMapping(path = "/allFormations")
-	public @ResponseBody String getAllFormations() {
-		return formationRepository.findAll().toString();
+	@GetMapping("/add")
+	public String addSave(@RequestParam(value = "preferences", required = false) int[] preferences, Model model,
+			Member member) {
+
+		if (preferences != null) {
+			Category category;
+			for (int i = 0; i < preferences.length; i++) {
+				if (categoryService.existsById(preferences[i])) {
+					category = new Category();
+					category.setId(preferences[i]);
+					member.addCategory(category);
+				}
+			}
+		}
+		return "index";
 	}
-
-	@GetMapping(path = "/allModules")
-	public @ResponseBody String getAllModules() {
-
-		return moduleRepository.findAll().toString();
-	}
-
-	@GetMapping(path = "/allStreamings")
-	public @ResponseBody String getAllStreamings() {
-		return streamingRepository.findAll().toString();
-	}
-
-	@GetMapping(path = "/allTimings")
-	public @ResponseBody String getAllTimings() {
-		return timingRepository.findAll().toString();
-	}
-
-	@GetMapping(path = "/delete")
-	public @ResponseBody String delete() {
-		formationRepository.deleteAll();
-		return "deleted";
-	}
-	
-
 }

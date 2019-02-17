@@ -28,7 +28,7 @@ import org.springframework.security.jackson2.SimpleGrantedAuthorityMixin;
 
 @Entity
 @Table(name = "member")
-public class Member implements UserDetails{
+public class Member implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +51,16 @@ public class Member implements UserDetails{
 	@NotEmpty
 	@Column(name = "password")
 	private String password;
+	
+	@Column
+	private boolean isEnabled = false;
+	
+	
+	// token for email confirmation : 
+	@Column(name = "confirmation_token")
+	private String confirmationToken;
+	//
+	
 
 	@OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH, CascadeType.DETACH })
@@ -62,35 +72,42 @@ public class Member implements UserDetails{
 	@JoinTable(name = "following", joinColumns = @JoinColumn(name = "memb_id"), inverseJoinColumns = @JoinColumn(name = "form_id"))
 	private List<Formation> followedFormations;
 
-	
 	// roles for security :
-	@ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST},fetch = FetchType.EAGER)
-    @JoinTable( 
-        name = "members_roles", 
-        joinColumns = @JoinColumn(
-          name = "member_id", referencedColumnName = "memb_id"), 
-        inverseJoinColumns = @JoinColumn(
-          name = "role_id", referencedColumnName = "id")) 
-    private Collection<Role> roles;
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
+	@JoinTable(name = "members_roles", joinColumns = @JoinColumn(name = "member_id", referencedColumnName = "memb_id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private Collection<Role> roles;
 	////////////////
+
+	// categories :
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "teacher_cat", joinColumns = @JoinColumn(name = "member_id"), inverseJoinColumns = @JoinColumn(name = "cat_id"))
+	private List<Category> categories = new ArrayList<>();
+	//Motivation
+	@Column(name = "motivation",columnDefinition="TEXT")
+	private String motivation;
 	
-    /*code hajar*************************************************************************************/
+	/*
+	 * code hajar
+	 *************************************************************************************/
 	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-	private Admission admission ;
-    // 
+	private Admission admission;
+	
+	
+
+	//
 	public Member() {
 
+	}
+
+	public Member(String firstName) {
+		super();
+		this.firstName = firstName;
 	}
 
 	public Member(String firstName, String lastName) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-	}
-
-	public Member(String firstName) {
-		super();
-		this.firstName = firstName;
 	}
 
 	public Member(String firstName, String lastName, String email, String password) {
@@ -102,69 +119,8 @@ public class Member implements UserDetails{
 		this.password = password;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	@Override
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	@OneToMany(mappedBy = "member", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
-			CascadeType.DETACH })
-	@JoinColumn(name = "form_id")
-	public List<Formation> getFollowedFormations() {
-		return followedFormations;
-	}
-
-	public void setFormations(List<Formation> formations) {
-		this.followedFormations = formations;
-	}
-
-	public List<Module> getTeachedModules() {
-		return teachedModules;
-	}
-
-	public void setModules(List<Module> modules) {
-		this.teachedModules = modules;
-	}
-
-	@Override
-	public String toString() {
-		return lastName + " " + firstName;
+	public void addCategory(Category category) {
+		categories.add(category);
 	}
 
 	public void addModules(Module module) {
@@ -175,9 +131,9 @@ public class Member implements UserDetails{
 		}
 		teachedModules.add(module);
 	}
-	
+
 	public void addRole(Role role) {
-		if(roles == null) {
+		if (roles == null) {
 			roles = new ArrayList<>();
 		}
 		roles.add(role);
@@ -191,7 +147,42 @@ public class Member implements UserDetails{
 		}
 		return authorities;
 	}
-	
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	@OneToMany(mappedBy = "member", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
+			CascadeType.DETACH })
+	@JoinColumn(name = "form_id")
+	public List<Formation> getFollowedFormations() {
+		return followedFormations;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	public List<Module> getTeachedModules() {
+		return teachedModules;
+	}
 
 	@Override
 	public String getUsername() {
@@ -203,6 +194,10 @@ public class Member implements UserDetails{
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+	
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	@Override
@@ -222,5 +217,65 @@ public class Member implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setFormations(List<Formation> formations) {
+		this.followedFormations = formations;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setModules(List<Module> modules) {
+		this.teachedModules = modules;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@Override
+	public String toString() {
+		return lastName + " " + firstName;
+	}
 	
+	public String getConfirmationToken() {
+		return confirmationToken;
+	}
+	
+	public void setConfirmationToken(String confirmationToken) {
+		this.confirmationToken = confirmationToken;
+	}
+	
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+	
+	public Collection<Role> getRoles() {
+		return roles;
+	}
+	
+	public Admission getAdmission() {
+		return admission;
+	}
+	
+	public String getMotivation() {
+		return motivation;
+	}
+	
+	public void setMotivation(String motivation) {
+		this.motivation = motivation;
+	}
 }
