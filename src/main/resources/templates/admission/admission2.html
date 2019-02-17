@@ -14,15 +14,16 @@
 
 	<div id="form_container" class="clearfix">
 		<figure>
-			<a href="index.html"><img src="img/logo.png" width="149"
-				height="42" data-retina="true" alt=""></a>
+			<a th:href="@{/}"><img src="img/logo.png" width="149" height="42"
+				data-retina="true" alt=""></a>
 		</figure>
 		<div id="wizard_container">
 			<div id="top-wizard">
 				<div id="progressbar"></div>
 			</div>
 			<!-- /top-wizard -->
-			<form autocomplete="off" th:action="@{/inscription}" method="post" th:object="${member}" name="example-1" id="wrapped">
+			<form autocomplete="off" th:action="@{/inscription}" method="post"
+				th:object="${member}" name="example-1" id="wrapped">
 				<input id="website" name="website" type="text" value=""> <!-- Leave for security protection, read docs for details -->
 				<div id="middle-wizard">
 					<div class="step">
@@ -30,11 +31,12 @@
 							<figure>
 								<img src="img/wizard_intro_icon.svg" alt="">
 							</figure>
-							<div th:if="${flash!=null}" th:text="${flash}" class="alert alert-danger">
-							</div>
 							<h1>Demande d'inscription</h1>
-							<p>Vous pouvez choisir d'être un enseignant dans notre
-								platforme ou simplement s'inscire comme étant un étudiant.</p>
+							<div th:if="${flash!=null}" th:text="${flash}"
+								class="alert alert-danger"></div>
+							<p th:if="${flash==null}">Vous pouvez choisir d'être un
+								enseignant dans notre platforme ou simplement s'inscire comme
+								étant un étudiant.</p>
 						</div>
 					</div>
 
@@ -43,32 +45,30 @@
 							<strong>1/2</strong>Remplir avec vos coordonnées
 						</h3>
 						<div class="form-group">
-							<input type="text" th:field="*{firstName}" class="form-control required"
-								placeholder="First name">
+							<input type="text" th:field="*{firstName}"
+								class="form-control required" placeholder="First name">
 						</div>
 						<div class="form-group">
-							<input type="text" th:field="*{lastName}" class="form-control required"
-								placeholder="Last name">
+							<input type="text" th:field="*{lastName}"
+								class="form-control required" placeholder="Last name">
 						</div>
 						<div class="form-group">
-							<input type="email" th:field="*{email}" class="form-control required"
-								placeholder="Your Email">
+							<input type="email" th:field="*{email}"
+								class="form-control required" placeholder="Your Email">
 						</div>
-						
-						<span class="input"> <input class="input_field" type="password" id="password1" th:field="*{password}" value="">
-						<label class="input_label"> <span class="input__label-content">Your
+
+						<span class="input"> <input class="input_field" required
+							type="password" id="password1" th:field="*{password}" value=""><label
+							class="input_label"> <span class="input__label-content">Your
 									password</span>
 						</label>
-						</span> 
-						
-						<span class="input"> <input class="input_field" id="password2" type="password">
-							<label class="input_label">
-							<span class="input__label-content">Confirm password</span>
-							<span id='message'></span>
-							</label>
-						</span>
-						<br/>
-						
+						</span> <span class="input"> <input class="input_field" required
+							id="password2" type="password"><label class="input_label">
+								<span class="input__label-content">Confirm password</span> <span
+								id='message'></span>
+						</label>
+						</span> <br />
+
 
 						<div id="pass-info" class="clearfix"></div>
 					</div>
@@ -76,29 +76,31 @@
 
 					<div class="submit step">
 						<h3 class="main_question">
-							<strong>2/2</strong>Votre Motivation
+							<strong>2/2</strong>
 						</h3>
-						
+						<h3 class="main_question">
+							<strong>Votre Motivation</strong>
+						</h3>
+
 						<div class="form-group add_top_30">
-							<textarea th:field="*{motivation}" name="additional_message" class="form-control required"
-								style="height: 120px;"
-								placeholder="Votre motivation... ici!"></textarea>
+							<textarea th:field="*{motivation}" name="additional_message"
+								id="motivation" class="form-control required"
+								style="height: 120px;" placeholder="Votre motivation... ici!"></textarea>
 						</div>
 						<h3 class="main_question">
 							<strong>Vos Préférences</strong>
 						</h3>
 						<div class="form-group">
-							<select th:field="*{categories}" name="categories" id="categories" class="selectpicker form-control" 
-									multiple data-actions-box="true"  data-live-search="true" data-size="5">
-								<option th:each="category : ${cats}" 
-									th:field="*{categories}"
-									th:value="${{category.id}}"
-									th:utext="${category.name}">
+							<select th:field="*{categories}" name="categories"
+								id="categories" class="selectpicker form-control" multiple
+								data-actions-box="true" data-live-search="true" data-size="5">
+								<option th:each="category : ${cats}" th:field="*{categories}"
+									th:value="${{category.id}}" th:utext="${category.name}">
 								</option>
 							</select>
 						</div>
 
-					
+
 					</div>
 					<!-- /step-->
 				</div>
@@ -132,10 +134,30 @@
 
 	<!-- SPECIFIC SCRIPTS -->
 	<script th:src="@{/js/pw_strenght.js}"></script>
-	
+
 	<!-- select js -->
 	<script th:src="@{/js/bootstrap-select.min.js}"></script>
 
+	<SCRIPT type="text/javascript">
+		$(function() {
+			$inp1 = $("#motivation");
+			$inp2 = $("#categories");
+			$cb = $("#preference");
+			$inp1.prop('readonly', false);
+			$inp2.prop('disabled', false);
 
+			$cb.on('change', function() {
+				console.log("hey");
+				if ($cb.is(':checked')) {
+					$inp1.prop('readonly', true);
+					$inp2.prop('disabled', true);
+				} else {
+					$inp1.prop('readonly', false);
+					$inp2.prop('disabled', false);
+				}
+				console.log("hey");
+			});
+		});
+	</SCRIPT>
 </body>
 </html>

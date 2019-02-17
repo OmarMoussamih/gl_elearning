@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- head -->
+<div th:replace="fragments/general.html :: head"></div>
+
+<body id="admission_bg">
+
+	<div id="preloader">
+		<div data-loader="circle-side"></div>
+	</div>
+	<!-- End Preload -->
+
+	<div id="form_container" class="clearfix">
+		<figure>
+			<a th:href="@{/}"><img src="img/logo.png" width="149"
+				height="42" data-retina="true" alt=""></a>
+		</figure>
+		<div id="wizard_container">
+			<div id="top-wizard">
+				<div id="progressbar"></div>
+			</div>
+			<!-- /top-wizard -->
+			<form autocomplete="off" th:action="@{/inscription}" method="post" th:object="${member}" name="example-1" id="wrapped">
+				<input id="website" name="website" type="text" value=""> <!-- Leave for security protection, read docs for details -->
+				<div id="middle-wizard">
+					<div class="step">
+						<div id="intro">
+							<figure>
+								<img src="img/wizard_intro_icon.svg" alt="">
+							</figure>
+							
+							<h1>Confirmation de l'inscription</h1>
+							<div th:if="${flash!=null}" th:text="${flash}" class="alert alert-secondary">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /middle-wizard -->
+				<div id="bottom-wizard">
+					<button type="button" name="backward" class="backward">Backward
+					</button>
+					<button type="button" id="forward" name="forward" class="forward">Forward</button>
+					<button type="submit" name="process" class="submit">Submit</button>
+				</div>
+				<!-- /bottom-wizard -->
+			</form>
+		</div>
+		<!-- /Wizard container -->
+	</div>
+	<!-- /Form_container -->
+
+	<!-- COMMON SCRIPTS -->
+	<script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+	<script th:src="@{/js/common_scripts.js}"></script>
+	<script th:src="@{/js/main_admission.js}"></script>
+	<script th:src="@{/assets/validate.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
+
+	<!-- SPECIFIC SCRIPTS -->
+	<script th:src="@{/js/jquery-ui-1.8.22.min.js}"></script>
+	<script th:src="@{/js/jquery.wizard.js}"></script>
+	<script th:src="@{/js/jquery.validate.js}"></script>
+	<script th:src="@{/js/admission_func.js}"></script>
+	<script th:src="@{/vendor/jquery.selectbox-0.2.js}"></script>
+
+	<!-- SPECIFIC SCRIPTS -->
+	<script th:src="@{/js/pw_strenght.js}"></script>
+	
+	<!-- select js -->
+	<script th:src="@{/js/bootstrap-select.min.js}"></script>
+
+
+</body>
+</html>

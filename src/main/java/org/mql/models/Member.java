@@ -53,7 +53,7 @@ public class Member implements UserDetails {
 	private String password;
 	
 	@Column
-	private boolean isEnabled = false;
+	private Boolean activated;
 	
 	
 	// token for email confirmation : 
@@ -214,10 +214,9 @@ public class Member implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
-
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -259,9 +258,7 @@ public class Member implements UserDetails {
 		this.confirmationToken = confirmationToken;
 	}
 	
-	public void setEnabled(boolean isEnabled) {
-		this.isEnabled = isEnabled;
-	}
+
 	
 	public Collection<Role> getRoles() {
 		return roles;
@@ -278,4 +275,13 @@ public class Member implements UserDetails {
 	public void setMotivation(String motivation) {
 		this.motivation = motivation;
 	}
+
+	public boolean isActivated() {
+		return activated;
+	}
+
+	public void setActivated(boolean activated) {
+		this.activated = activated;
+	}
+	
 }

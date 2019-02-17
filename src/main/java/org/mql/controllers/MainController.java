@@ -80,7 +80,6 @@ public class MainController {
 	@GetMapping("/register")
 	public String register2(Model model) {
 		List<Category> categories = categoryService.findAll();
-		System.out.println(categories.get(0));
 		model.addAttribute("categories", categories);
 		return "admission/admission2";
 	}

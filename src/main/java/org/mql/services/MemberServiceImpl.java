@@ -1,8 +1,12 @@
 package org.mql.services;
 
 import java.util.List;
+import java.util.UUID;
+
+import javax.mail.MessagingException;
 
 import org.mql.dao.MemberRepository;
+import org.mql.email.DemandeAdmission;
 import org.mql.models.Member;
 import org.mql.models.Role;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,9 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private DemandeAdmission mail;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -49,7 +56,21 @@ public class MemberServiceImpl implements MemberService{
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
 		Role studentRole = roleService.findRoleByName(RoleService.STUDENT);
 		member.addRole(studentRole);
-		member.setEnabled(false);
+		member.setActivated(false);
+		member.setConfirmationToken(UUID.randomUUID().toString());
+		
+		String htmlContent = "<html>"
+				+ "<body  style=\"color: white; font-family: Helvetica, Sans-Serif;\">\r\n"
+				+"<div style=\"background-color:rgb(36, 119, 192);  padding:10px;\">\r\n"
+		        + " <h1 align=\"center\">Confirmation d'email</h1>"
+				+ " <p><strong>Pour confirmer votre adresse e-mail, veuillez cliquer sur le lien ci-dessous.</strong></p>" 
+		        + "<a style=\"color: rgb(255, 210, 210)\" href=\"http://localhost:8080/confirm?token="+member.getConfirmationToken()+"\">Lien de confirmation</a>" + "</div>" + "</body>\r\n" + "</html>";
+		try {
+			mail.send(member.getEmail(),"master.qualite.logiciel2019@gmail.com", "Confirmation d'email - E-Learning MQL", htmlContent);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		
 		return repository.save(member);
 	}
 	
