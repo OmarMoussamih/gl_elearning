@@ -22,44 +22,49 @@ public class Admission {
     @JoinColumn(name = "member_id")
     private Member member ;
 	
-	private String domaine ;
-	private String motivation ;
+	@Column
+	Boolean visible;
+	//private String domaine;
+	//private String motivation;
 	
 	public Admission() {
 		super();
-		
 	}
-	public Admission(int id, Member member, String domaine, String motivation) {
-		super();
-		this.id = id;
+	
+	public Admission(Member member) {
 		this.member = member;
-		this.domaine = domaine;
-		this.motivation = motivation;
 	}
+	
+	public Admission(Member member, Boolean visible) {
+		super();
+		this.member = member;
+		this.visible = visible;
+	}
+
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public Member getMember() {
 		return member;
 	}
+
 	public void setMember(Member member) {
 		this.member = member;
 	}
-	public String getDomaine() {
-		return domaine;
-	}
-	public void setDomaine(String domaine) {
-		this.domaine = domaine;
-	}
-	public String getMotivation() {
-		return motivation;
-	}
-	public void setMotivation(String motivation) {
-		this.motivation = motivation;
-	}
+
 	
 	
 }

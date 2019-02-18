@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public AuthenticationFailureHandler loginFailureHandler() {
 		return	(request, response, authentication) -> {
 			request.getSession().setAttribute("flash", "Email et/ou mot de passe incorrect, veuillez réssayer!");
-
+			request.getSession().setAttribute("message", authentication.getMessage());
 			response.sendRedirect("/login");
 		};
 	}

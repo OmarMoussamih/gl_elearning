@@ -25,10 +25,16 @@ public class LoginController {
 		model.addAttribute("member",new Member());
 		
 		try {
+			String message =(String) request.getSession().getAttribute("message");
+			if(message.equalsIgnoreCase("User is disabled")) {
+				request.getSession().removeAttribute("message");
+				model.addAttribute("flash","Votre E-mail n'est pas encore confirmé, Veuillez consulter votre email!");
+				return "admission/message";
+			}
 			Object flash = request.getSession().getAttribute("flash");
 			model.addAttribute("flash",flash);
 			request.getSession().removeAttribute("flash");
-			
+
 		}catch(Exception e){
 			// flash doesn't exist.. do nothing
 			

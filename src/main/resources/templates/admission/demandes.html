@@ -29,8 +29,8 @@
 					<li>
 						<figure><img th:src="@{${'https://via.placeholder.com/150x150/212529/fff?text='+#strings.substring(teacher.member.firstName,0,1)}}"  alt=""></figure>
 						<h4><label th:text="${teacher.member.lastName}"></label> <label th:text="${teacher.member.firstName}"></label><i class="unread">Unread</i></h4>
-						<p>mon domaine :  <label th:text="${teacher.domaine}"></label></p>
-						<p>mes motivations :<label th:text="${teacher.motivation}"></label> </p>
+						<p>Domaines :  <label th:text="${teacher.member.categories}"></label></p>
+						<p>Motivations :  <label th:text="${teacher.member.motivation}"></label> </p>
 						
 						<form th:action="@{/acceptation}" th:object="${teacher}" method="post" style="display: inline;">
                              <input type="hidden" name="id" th:value="${teacher.id}" />

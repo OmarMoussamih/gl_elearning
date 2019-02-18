@@ -28,39 +28,33 @@
 
 				<!-- Leave for security protection, read docs for details -->
 				<div id="middle-wizard">
-
-
 					<div class="step">
 						<h3 class="main_question">
-							<strong>Entrez plus de details</strong>
+							<strong>Entrez Plus de details</strong>
 						</h3>
 						<div class="form-group">
 							<input type="text" readonly="readonly" name="email" class="form-control required"
-								placeholder="email" th:value="${member.email}" />
+								placeholder="email" th:field="*{member.email}" />
 						</div>
-						<div class="form-group select">
-							<div class="styled-select">
-								<select class="required" name="domaine" id="education_apply"
-									th:value="${admission.domaine}">
-									<option value="" selected="">choisissez votre domaine
-									</option>
-									<option value="sciences et technologiesl">sciences et
-										technologies</option>
-									<option value="Lettres modernes">Lettres modernes</option>
-									<option value="sciences humaines et sociales">
-										sciences humaines et sociales</option>
-									<option value="droit et sciences politiques">droit et
-										sciences politiques</option>
-									<option value="économie et gestion">économie et
-										gestion</option>
-								</select>
-							</div>
-						</div>
+						<h3 class="main_question">
+							<strong>Vos Motivations</strong>
+						</h3>
 						<div class="form-group add_top_30">
-							<textarea name="motivation" class="form-control required"
-								style="height: 120px;"
-								placeholder="vos motivations pour enseigner...?"
-								th:value="${admission.domaine}"></textarea>
+							<textarea th:field="*{member.motivation}" name="additional_message"
+								id="motivation" class="form-control required"
+								style="height: 120px;" placeholder="Vos motivations... ici!"></textarea>
+						</div>
+						<h3 class="main_question">
+							<strong>Vos Préférences</strong>
+						</h3>
+						<div class="form-group select">
+							<select th:field="*{member.categories}" name="categories"
+								id="categories" class="selectpicker form-control" multiple
+								data-actions-box="true" data-live-search="true" data-size="5">
+								<option th:each="category : ${cats}" th:field="*{member.categories}"
+									th:value="${{category.id}}" th:utext="${category.name}">
+								</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -72,7 +66,7 @@
 					</p>
 					<script>
 						function myFunction() {
-							alert("votre demande sera envoyee dans quelques instant");
+							alert("votre demande sera envoyée dans quelques instant");
 						}
 					</script>
 				</div>
@@ -97,6 +91,9 @@
 	<script th:src="@{js/jquery.wizard.js}"></script>
 	<script th:src="@{js/jquery.validate.js}"></script>
 	<script th:src="@{js/admission_func.js}"></script>
+	
+	<!-- select js -->
+	<script th:src="@{/js/bootstrap-select.min.js}"></script>
 	
 	
 

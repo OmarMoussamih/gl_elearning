@@ -77,13 +77,6 @@ public class MainController {
 		return "main_views/register";
 	}
 
-	@GetMapping("/register")
-	public String register2(Model model) {
-		List<Category> categories = categoryService.findAll();
-		model.addAttribute("categories", categories);
-		return "admission/admission2";
-	}
-
 	@GetMapping("/add")
 	public String addSave(@RequestParam(value = "preferences", required = false) int[] preferences, Model model,
 			Member member) {

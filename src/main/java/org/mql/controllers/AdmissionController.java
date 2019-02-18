@@ -11,9 +11,11 @@ import org.mql.email.DemandeAdmission;
 import org.mql.models.Formation;
 import org.mql.models.Member;
 import org.mql.models.Role;
+import org.mql.services.CategoryService;
 import org.mql.services.MemberService;
 import org.mql.services.RoleService;
 import org.mql.models.Admission;
+import org.mql.models.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,48 +43,43 @@ public class AdmissionController {
 	MemberService memberService;
 
 	@Autowired
+	CategoryService categoryService;
+	
+	@Autowired
 	private RoleService roleService;
 
 	@GetMapping(value = "/admission")
 	public String FormulaireAdmission(Model model, Principal principal) {
 		Member member = memberService.findByEmail(principal.getName());
 		model.addAttribute("member", member);
-		System.out.println(member);
-		model.addAttribute("admission", new Admission());
+		//System.out.println(member);
+		//model.addAttribute("admission", new Admission());
+		List<Category> categories = categoryService.findAll();
+		model.addAttribute("cats", categories);
 		return "admission/addAdmission";
 	}
 
 	// creation de l'email qui sera envoyee a l'email de l'administrateur
 	@PostMapping(value = "/saveAdmission")
-	public String sendAdmission(Model model, Admission admission, Member member) throws MessagingException {
-		member = memberRepository.findByEmail(member.getEmail());
-		admission.setMember(member);
-		memberRepository.save(member);
+	public String sendAdmission(Model model, Member member) {
+		Member currentMember = memberService.findByEmail(member.getEmail());
+		currentMember.setCategories(member.getCategories());
+		currentMember.setMotivation(member.getMotivation());
+		Admission admission = new Admission(currentMember,true); 
+		//admission.setMember(currentMember);
+		memberRepository.save(currentMember);
 		admissionRepository.save(admission); // TEST if there is possiblity to delete
-		/*
-		String htmlContent = "<body>\r\n" + "<div align=\"center\" style=\"background-color:lightblue\">\r\n"
-				+ " <h3>Demande d'admission</h3>" + " <p>nom :" + member.getFirstName() + "</p>\r\n" + " <p>prenom :"
-				+ member.getLastName() + "</p>\r\n" + " <p>email :" + member.getEmail() + "</p>\r\n"
-				+ " <p> mon domaine :" + admission.getDomaine() + "</p>\r\n" + " <p> mes motivations :"
-				+ admission.getMotivation() + "</label></p>\r\n"
-				+ "<a href=\"http://localhost:8080//messages\">cliquer ici </a>" + "</div>" + "</body>\r\n" + "</html>";
 		
-		*/
-		String htmlContent = "<body  style=\"color: white; font-family: Helvetica, Sans-Serif;\">\r\n" + "<div style=\"background-color:rgb(36, 119, 192);  padding:10px;\">\r\n"
-		        + " <h1 align=\"center\">Demande d'admission</h1>" + " <p><strong>Nom :</strong>" + member.getFirstName() + "</p>\r\n" + " <p> <strong>Prénom : </strong>"
-		        + member.getLastName() + "</p>\r\n" + " <p><strong>Email : </strong>" + member.getEmail() + "</p>\r\n"
-		        + " <p><strong> Domaine :</strong>" + admission.getDomaine() + "</p>\r\n" + " <p> <strong>Motivations :</strong>"
-		        + admission.getMotivation() + "</label></p>\r\n"
-		        + "<a style=\"color: rgb(255, 210, 210)\" href=\"http://localhost:8080/dashboard/demands\">Liste des demandes</a>" + "</div>" + "</body>\r\n" + "</html>";
-
+		memberService.sendAdmissionEmail(currentMember);
 		
-		mail.send("master.qualite.logiciel2019@gmail.com", member.getEmail(), "demande d'admission", htmlContent);
-		return "redirect:/dashboard/";
+		model.addAttribute("flash","Votre demande a été enregistré! ");
+		return "admission/message";
+	
 	}
 
 	@GetMapping(value = "/dashboard/demands")
 	public String index(Model model) {
-		List<Admission> Teachers = admissionRepository.findAll();
+		List<Admission> Teachers = admissionRepository.findByVisible(true);
 		model.addAttribute("listeTeachers", Teachers);
 		return "admission/demandes";
 	}

@@ -102,4 +102,22 @@ public class MemberServiceImpl implements MemberService{
 	public Member findByConfirmationToken(String confirmation) {
 		return repository.findByConfirmationToken(confirmation);
 	}
+	
+	@Override
+	public boolean sendAdmissionEmail(Member member) {
+		String htmlContent = "<body  style=\"color: white; font-family: Helvetica, Sans-Serif;\">\r\n" + "<div style=\"background-color:rgb(36, 119, 192);  padding:10px;\">\r\n"
+		        + " <h1 align=\"center\">Demande d'admission</h1>" + " <p><strong>Nom : </strong>" + member.getFirstName() + "</p>\r\n" + " <p> <strong>Prénom : </strong>"
+		        + member.getLastName() + "</p>\r\n" + " <p><strong>Email : </strong>" + member.getEmail() + "</p>\r\n"
+		        + " <p><strong> Domaines : </strong>" + member.getCategories() + "</p>\r\n" + " <p> <strong>Motivations : </strong>"
+		        + member.getMotivation() + "</label></p>\r\n"
+		        + "<a style=\"color: rgb(255, 210, 210)\" href=\"http://localhost:8080/dashboard/demands\">Liste des demandes</a>" + "</div>" + "</body>\r\n" + "</html>";
+
+		
+		try {
+			mail.send("master.qualite.logiciel2019@gmail.com", member.getEmail(), "demande d'admission", htmlContent);
+			return true;
+		} catch (MessagingException e) {
+			return false;
+		}
+	}
 }

@@ -14,4 +14,5 @@ public interface MemberService extends UserDetailsService{
 	List<Member> findTeachers();
 	Member save(Member member);
 	Member findByConfirmationToken(String confirmation);
+	boolean sendAdmissionEmail(Member member);
 }

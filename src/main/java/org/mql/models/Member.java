@@ -82,9 +82,12 @@ public class Member implements UserDetails {
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "teacher_cat", joinColumns = @JoinColumn(name = "member_id"), inverseJoinColumns = @JoinColumn(name = "cat_id"))
 	private List<Category> categories = new ArrayList<>();
+	
 	//Motivation
 	@Column(name = "motivation",columnDefinition="TEXT")
 	private String motivation;
+	
+	
 	
 	/*
 	 * code hajar
@@ -214,7 +217,7 @@ public class Member implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return activated;
 	}
 	
 	public void setEmail(String email) {

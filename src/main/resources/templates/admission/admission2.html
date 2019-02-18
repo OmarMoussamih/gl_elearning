@@ -22,7 +22,7 @@
 				<div id="progressbar"></div>
 			</div>
 			<!-- /top-wizard -->
-			<form autocomplete="off" th:action="@{/inscription}" method="post"
+			<form autocomplete="off" th:action="@{/saveTeacher}" method="post"
 				th:object="${member}" name="example-1" id="wrapped">
 				<input id="website" name="website" type="text" value=""> <!-- Leave for security protection, read docs for details -->
 				<div id="middle-wizard">
@@ -42,7 +42,7 @@
 
 					<div class="step">
 						<h3 class="main_question">
-							<strong>1/2</strong>Remplir avec vos coordonnées
+							<strong>1/2</strong>Remplir vos informationss
 						</h3>
 						<div class="form-group">
 							<input type="text" th:field="*{firstName}"
@@ -67,7 +67,7 @@
 								<span class="input__label-content">Confirm password</span> <span
 								id='message'></span>
 						</label>
-						</span> <br />
+						</span> <br/>
 
 
 						<div id="pass-info" class="clearfix"></div>
@@ -79,7 +79,7 @@
 							<strong>2/2</strong>
 						</h3>
 						<h3 class="main_question">
-							<strong>Votre Motivation</strong>
+							<strong>Vos Motivations</strong>
 						</h3>
 
 						<div class="form-group add_top_30">
