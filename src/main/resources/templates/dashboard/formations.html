@@ -32,8 +32,7 @@
 							<li th:inline="text"><strong>Start date</strong> [[${formation.creatingDate}]]</li>
 						</ul>
 						<h6>Description</h6> 
-						<p>Lorem ipsum dolor sit amet, est ei idque voluptua copiosae, pro detracto disputando reformidans at, ex vel suas eripuit. Vel alii zril maiorum ex, mea id sale eirmod epicurei. Sit te possit senserit, eam alia veritus maluisset ei, id cibo vocent ocurreret per. Te qui doming doctus referrentur, usu debet tamquam et. Sea ut nullam aperiam, mei cu tollit salutatus delicatissimi. His appareat perfecto intellegat te. </p>
-						
+						<p th:text="${formation.description}"></p>
 						<h6 th:if="${not #lists.isEmpty(formation.modules)}">Modules</h6>
 						
 						<ul>

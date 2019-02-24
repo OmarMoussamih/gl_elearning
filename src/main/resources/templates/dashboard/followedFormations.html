@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="fragments/general_dashboard.html :: head"></div>
+
+<body class="fixed-nav sticky-footer" id="page-top">
+  <!-- Navigation-->
+  <div th:replace="fragments/general_dashboard :: dashboard_nav"></div>
+  <!-- /Navigation-->
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Formations</li>
+      </ol>
+		<div style="padding-bottom:15px" th:if="${#lists.isEmpty(formations)}" class="box_general">
+			<h3 align="center">Aucune Formation suivie pour le Moment <i class="fa fa-frown-o" aria-hidden="true"></i></h3>
+		</div>
+		<div th:unless="${#lists.isEmpty(formations)}" class="box_general">
+			<div class="header_box">
+				<h2 class="d-inline-block">Formations</h2>
+			</div>
+			<div class="list_general">
+				<ul>
+					<li th:each="formation: ${formations}">
+						<figure><img th:src="@{${'https://via.placeholder.com/70/212529/fff?text='+#strings.substring(formation.title,0,1)}}" alt=""></figure>
+						<h4 th:inline="text"> [[${formation.title}]] <i class="approved">Started</i></h4>
+						<ul class="course_list">
+							<li th:inline="text"><strong>Category</strong> [[${formation.category}]]</li>
+							<li th:inline="text"><strong>Start date</strong> [[${formation.creatingDate}]]</li>
+						</ul>
+						<h6>Description</h6> 
+						<p th:text="${formation.description}"></p>
+						<h6 th:if="${not #lists.isEmpty(formation.modules)}">Modules</h6>
+						
+						<ul>
+							<li th:each="module: ${formation.modules}">
+								<p th:text="${module.title}">
+							</li>
+						</ul>
+						<!--<ul class="buttons">-->
+							<!--<li><a th:href="@{/dashboard/formation/{id}/add(id=${formation.id})}" class="btn_1 gray approve"><i class="fa fa-plus"></i> Ajouter un module</a></li>-->
+						<!--</ul>-->
+					</li>
+					
+				</ul>
+			</div>
+		</div>
+		<!-- /box_general-->
+		<!--  
+		<nav aria-label="...">
+			<ul class="pagination pagination-sm add_bottom_30">
+				<li class="page-item disabled">
+					<a class="page-link" href="#" tabindex="-1">Previous</a>
+				</li>
+				<li class="page-item"><a class="page-link" href="#">1</a></li>
+				<li class="page-item"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item">
+					<a class="page-link" href="#">Next</a>
+				</li>
+			</ul>
+		</nav>
+		
+		-->
+		
+		<!-- /pagination-->
+	  </div>
+	  <!-- /container-fluid-->
+   	</div>
+    <!-- /container-wrapper-->
+    <div th:replace="fragments/general_dashboard :: dashboard_footer"></div>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div th:replace="fragments/general_dashboard :: logout_modal"></div>
+    
+    
+    <!-- SCRIPTS -->
+	
+	 <!-- Bootstrap core JavaScript-->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <!-- Page level plugin JavaScript-->
+    <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+    <script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
+    <script th:src="@{/vendor/datatables/dataTables.bootstrap4.js}"></script>
+	<script th:src="@{/vendor/jquery.selectbox-0.2.js}"></script>
+	<script th:src="@{/vendor/retina-replace.min.js}"></script>
+	<script th:src="@{/vendor/jquery.magnific-popup.min.js}"></script>
+    <!-- Custom scripts for all pages-->
+    <script th:src="@{/js/admin.js}"></script>
+	
+	<!-- SCRIPTS END-->
+</body>
+</html>

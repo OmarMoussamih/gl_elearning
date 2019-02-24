@@ -6,51 +6,58 @@
 <div th:replace="fragments/general.html :: head"></div>
 
 <body id="login_bg">
-	
+
 	<nav id="menu" class="fake_menu"></nav>
-	
+
 	<div id="preloader">
 		<div data-loader="circle-side"></div>
 	</div>
 	<!-- End Preload -->
-	
+
 	<div id="login">
 		<aside>
 			<figure>
 				<a href="/"><img src="/img/logo.png" width="149" height="42" data-retina="true" alt=""></a>
 			</figure>
-			  <form>
+			<form th:action="@{/login}" th:object="${member}" method="POST">
+				<div th:if="${flash!=null}" th:text="${flash}" id="pass-info" class="weakpass">
+					Erreur
+				</div>
+				<div class="divider">
+					<span></span>
+				</div>
 				
-				<div class="divider"><span></span></div>
 				<div class="form-group">
-					<span class="input">
-					<input class="input_field" type="email" autocomplete="off" name="email">
-						<label class="input_label">
+					<span class="input"> <input class="input_field" type="text" autocomplete="off" name="username">
+					<label class="input_label"> 
 						<span class="input__label-content">Email</span>
 					</label>
-					</span>
-
-					<span class="input">
+					</span> 
+					<span class="input"> 
 					<input class="input_field" type="password" autocomplete="new-password" name="password">
-						<label class="input_label">
-						<span class="input__label-content">Mot de passe</span>
+					<label class="input_label">
+					<span class="input__label-content">Mot de passe</span>
 					</label>
-					</span>
-					<small><a href="#0">Forgot password?</a></small>
+					</span> <small><a href="#0">Forgot password?</a></small>
 				</div>
-				<a href="#0" class="btn_1 rounded full-width add_top_60">SE CONNECTER</a>
-				<div class="text-center add_top_10">Pas encore membre ? <strong><a th:href="@{/inscrire}">Inscrivez-vous!</a></strong></div>
+				<input name="submit" type="submit" class="btn_1 rounded full-width add_top_60" value="SE CONNECTER">
+				<div class="text-center add_top_10">
+					Pas encore un membre ? <strong><a th:href="@{/register}">Inscrivez-vous!</a></strong>
+				</div>
+				<div class="text-center add_top_10">
+					Ou <strong><a th:href="@{/registerTeacher}">Devenir un enseignant!</a></strong>
+				</div>
 			</form>
 			<div class="copy">© 18-19 Challengers</div>
 		</aside>
 	</div>
 	<!-- /login -->
-		
+
 	<!-- COMMON SCRIPTS -->
 	<script th:src="@{/js/jquery-2.2.4.min.js}"></script>
 	<script th:src="@{/js/common_scripts.js}"></script>
 	<script th:src="@{/js/main.js}"></script>
 	<script th:src="@{/assets/validate.js}"></script>
-  
+
 </body>
 </html>

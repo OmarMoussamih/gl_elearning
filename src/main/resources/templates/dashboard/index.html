@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:replace="fragments/general_dashboard.html :: head"></div>
+
+<body class="fixed-nav sticky-footer" id="page-top">
+	<!-- Navigation-->
+	<div th:replace="fragments/general_dashboard :: dashboard_nav"></div>
+	<!-- /Navigation-->
+	<div class="content-wrapper">
+		<div class="container-fluid">
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+				<li class="breadcrumb-item active">Accueil</li>
+			</ol>
+			<div class="box_general">
+				<div class="header_box">
+					<h2 class="d-inline-block">Bienvenue [[${member.firstName}]]</h2>
+				</div>
+				<div class="list_general">
+					<ul>
+						<li>
+							<figure>
+								<img
+									th:src="@{${'https://via.placeholder.com/70/212529/fff?text='+#strings.substring(member.firstName,0,1)}}"
+									alt="">
+							</figure>
+							<h4> 
+								<i sec:authorize="hasRole('STUDENT')" class="approved">Etudiant</i> 
+								<i sec:authorize="hasRole('TEACHER')" class="pending">Enseignant</i>
+								<i sec:authorize="hasRole('RESPONSABLE')" class="cancel">Responsable</i>
+								<i sec:authorize="hasRole('ADMIN')" class="cancel">Admin</i>
+							</h4>
+							
+							<ul class="course_list">
+								<li th:inline="text"><strong>Prénom :</strong>
+									[[${member.firstName}]]</li>
+								<li th:inline="text"><strong>Nom :</strong>
+									[[${member.lastName}]]</li>
+								<li th:inline="text"><strong>Email :</strong>
+									[[${member.email}]]</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- /box_general-->
+
+		<a th:href="@{/}"><i class="fa fa-fw fa-chevron-circle-left"></i> Retourner à l'accueil de la platforme</a>
+		</div>
+		<!-- /container-fluid-->
+	</div>
+	<!-- /container-wrapper-->
+	<div th:replace="fragments/general_dashboard :: dashboard_footer"></div>
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fa fa-angle-up"></i>
+	</a>
+	<!-- Logout Modal-->
+	<div th:replace="fragments/general_dashboard :: logout_modal"></div>
+
+
+	<!-- SCRIPTS -->
+
+	<!-- Bootstrap core JavaScript-->
+	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<!-- Core plugin JavaScript-->
+	<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+	<!-- Page level plugin JavaScript-->
+	<script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+	<script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
+	<script th:src="@{/vendor/datatables/dataTables.bootstrap4.js}"></script>
+	<script th:src="@{/vendor/jquery.selectbox-0.2.js}"></script>
+	<script th:src="@{/vendor/retina-replace.min.js}"></script>
+	<script th:src="@{/vendor/jquery.magnific-popup.min.js}"></script>
+	<!-- Custom scripts for all pages-->
+	<script th:src="@{/js/admin.js}"></script>
+
+	<!-- SCRIPTS END-->
+</body>
+</html>

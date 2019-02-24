@@ -1,69 +1,79 @@
 package org.mql.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
 
-import org.mql.dao.FormationRepository;
-import org.mql.dao.MemberRepository;
-import org.mql.dao.ModuleRepository;
 import org.mql.models.Formation;
 import org.mql.models.Member;
+import org.mql.services.FormationService;
+import org.mql.services.MemberService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class FormationController {
 
-	@Autowired
-	FormationRepository formationRepository;
+	private Logger log = LoggerFactory.getLogger(FormationController.class);
+
 	
 	@Autowired
-	ModuleRepository moduleRepository;
+	MemberService memberService;
+	
 	@Autowired
-	MemberRepository memberRepository;
+	FormationService formationService;
+	
 	
 	@GetMapping("/formation/{id}")
-	public String getForm(@PathVariable int id,Model model) {
-		Formation formation =formationRepository.findById(id).get();
+	public String getForm(@PathVariable int id,Model model,HttpServletRequest request,Principal principal) {
+		Formation formation =formationService.findById(id);
+		if(formation==null) {
+			return "error/404";
+		}
+		try {
+			Object flash = request.getSession().getAttribute("flash");
+			model.addAttribute("flash", flash);
+			request.getSession().removeAttribute("flash");
+		}catch(Exception e){
+			// flash doesn't exist.. do nothing
+			
+		}	
+		boolean inscription = false;
+		if(principal != null) {
+			Member member = memberService.findByEmail(principal.getName());
+			inscription = formationService.containsMember(formation, member);
+		}
+		model.addAttribute("inscription", inscription);
 		model.addAttribute("formation",formation);
 		return "/formations/formation";
 	}
 	
-	//CODE HAJAR : ajouter une formation via une formulaire**************************************************
-	@GetMapping(value="/dashboard/formation/add")
-	public String FormulaireFormation(Model model)
-	{
-		model.addAttribute("formation",new Formation());
-		model.addAttribute("member",new Member());
-		return "dashboard/addFormation" ;
-	}
-	//affichage de la formation ajoutee**********************************************************************
-	@PostMapping(value="/saveFormation")
-	public String save(Model model,@Valid Formation formation,Member member, BindingResult bindingResult)
-	{
-		if(bindingResult.hasErrors())
-		{
-			return "/dashboard/formation/add" ;
-		}
-		//formationRepository.save(formation);
-		member=memberRepository.findByEmail(member.getEmail());
-		formation.setCreator(member);
-		formationRepository.save(formation);
-		return "redirect:/dashboard/formation/";
-	}
 	//page dans l'acceuil pour afficher toutes les formations*************************************************
 	@GetMapping(value="/formations")
 	public String index(Model model)
 	{
-		List<Formation> Formations=formationRepository.findAllByOrderByIdDesc();
+		List<Formation> Formations=formationService.findAllByOrderByIdDesc();
 		model.addAttribute("listeFormations",Formations);	
 		return "main_views/listformations" ;
 	}
 	
+	// following
+	@GetMapping(value="/formation/{id}/follow")
+	public String followFormation(@PathVariable int id,Principal principal,Model model,HttpServletRequest request) {
+		if(principal==null) {
+			request.getSession().setAttribute("flash", "msg");
+			return "redirect:/formation/"+id;  
+		}
+		Member member = memberService.findByEmail(principal.getName());
+		Formation formation = formationService.findById(id);
+		formation.addMember(member);
+		formationService.save(formation);
+		return "redirect:/formation/"+id;
+	}
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,7 +30,6 @@
   	<link th:href="@{/css/date_picker.css}" rel="stylesheet">
  	<!-- Your custom styles -->
   	<link th:href="@{/css/custom.css}" rel="stylesheet">
-<!-- 	Added by Omar -->
 	<link th:href="@{/css/icon_fonts/css/all_icons.min.css}" rel="stylesheet">
 	
 	
@@ -48,66 +47,47 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
           <a class="nav-link" th:href="@{/dashboard/}">
             <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">Dashboard</span>
+            <span class="nav-link-text">Accueil</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">
+        <li sec:authorize="hasRole('STUDENT')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">
+          <a class="nav-link" th:href="@{/dashboard/followedFormation/}">
+              <i class="fa fa-fw fa-list"></i>
+              <span class="nav-link-text">Liste des formations</span>
+          </a>
+        </li>
+        <li sec:authorize="hasRole('RESPONSABLE')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">
+          <a class="nav-link" th:href="@{/dashboard/formation/}">
+            <i class="fa fa-fw fa-list"></i>
+            <span class="nav-link-text">Liste des formations</span>
+          </a>
+        </li>
+        
+        <li th:if="${#authorization.expression('hasRole(''ROLE_STUDENT'')') and #authorization.expression('!hasRole(''ROLE_TEACHER'')') }" class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">
+          <a class="nav-link" th:href="@{/admission}">
+            <i class="fa fa-fw fa-graduation-cap"></i>
+            <span class="nav-link-text">Devenir Enseignant</span>
+          </a>
+        </li>
+        
+        
+        <li sec:authorize="hasRole('RESPONSABLE')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">
           <a class="nav-link" th:href="@{/dashboard/formation/add}">
             <i class="fa fa-fw fa-plus-circle"></i>
             <span class="nav-link-text">Ajouter une Formation</span>
           </a>
         </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
-          <a class="nav-link" th:href="@{#}">
-            <i class="fa fa-fw fa-envelope-open"></i>
-            <span class="nav-link-text">Messages</span>
+        <li sec:authorize="hasRole('TEACHER')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">
+          <a class="nav-link" th:href="@{/dashboard/stream/add}">
+            <i class="fa fa-fw fa-youtube-square"></i>
+            <span class="nav-link-text">Ajouter un Live</span>
           </a>
         </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bookings">
-          <a class="nav-link" th:href="@{#}">
-            <i class="fa fa-fw fa-archive"></i>
-            <span class="nav-link-text">Courses <span class="badge badge-pill badge-primary">6 New</span></span>
+        <li sec:authorize="hasRole('ADMIN')" class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">
+          <a class="nav-link" th:href="@{/dashboard/demands}">
+            <i class="fa fa-fw fa-check-square"></i>
+            <span class="nav-link-text">Demandes d'admission</span>
           </a>
-        </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
-          <a class="nav-link" th:href="@{#}">
-            <i class="fa fa-fw fa-star"></i>
-            <span class="nav-link-text">Reviews</span>
-          </a>
-        </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bookmarks">
-          <a class="nav-link" th:href="@{#}">
-            <i class="fa fa-fw fa-heart"></i>
-            <span class="nav-link-text">Bookmarks</span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseProfile" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-wrench"></i>
-            <span class="nav-link-text">My profile</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseProfile">
-            <li>
-              <a th:href="@{#}">User profile</a>
-            </li>
-			<li>
-              <a th:href="@{#}">Teacher profile</a>
-            </li>
-          </ul>
-        </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-gear"></i>
-            <span class="nav-link-text">Components</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseComponents">
-            <li>
-              <a th:href="@{#}">Charts</a>
-            </li>
-			<li>
-              <a th:href="@{#}">Tables</a>
-            </li>
-          </ul>
         </li>
       </ul>
       <ul class="navbar-nav sidenav-toggler">
@@ -324,15 +304,17 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Prêt à partir?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-body">Sélectionnez "Se Déconnecter" ci-dessous si vous voulez finir votre session en cours.</div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" th:href="@{#}">Logout</a>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <form th:action="@{/logout}" method="POST">
+            	<button type="submit" class="btn btn-primary" value="">Se Déconnecter</button>
+            </form>
           </div>
         </div>
       </div>

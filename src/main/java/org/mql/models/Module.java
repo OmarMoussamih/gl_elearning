@@ -67,6 +67,13 @@ public class Module {
 		this.title = title;
 		this.description = description;
 	}
+	
+	
+	public Module(String title, Member teacher) {
+		super();
+		this.title = title;
+		this.teacher = teacher;
+	}
 
 	public Module(String title, String description, float rating, String type) {
 		super();

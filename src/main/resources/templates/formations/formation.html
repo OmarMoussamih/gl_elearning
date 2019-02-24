@@ -65,7 +65,10 @@
 											<ul>
 												<li th:text="'Description : '+${module.description}"></li>
 												<li th:text="'Type : '+${module.type}"></li>
-												<li th:text="'Enseignant : '+${module.teacher}"></li>
+												<li>
+													Enseignant :<a th:href="@{|/teacher/${module.teacher.id}|}" th:text="' ' + ${module.teacher}"></a>
+												</li>							
+					
 											</ul>
 											</div>
 										</div>
@@ -213,8 +216,9 @@
 							
 								<img th:src="@{${'https://via.placeholder.com/800x533/662d91/fff?text='+formation.title}}" alt="" class="img-fluid">
 							</figure>
-							
-							<a href="#0" class="btn_1 full-width">S'INSCRIRE</a>
+							<div th:if="${flash!=null}" class="alert alert-warning" role="alert">Vous devriez vous connecter d'abord, <strong><a th:href="@{/login}">Se Connecter</a></strong></div>
+							<a th:if="${inscription}==false" th:href="@{/formation/{id}/follow(id=${formation.id})}" class="btn_1 full-width">S'INSCRIRE</a>
+							<div th:if="${inscription}==true" class="alert alert-info" role="alert"><strong>Inscrit!</strong> Vous êtes déjà inscrit dans cette formation.</div>
 							<div id="list_feat">
 								<h3>What's includes</h3>
 								<ul>

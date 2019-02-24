@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- head -->
+<div th:replace="fragments/general.html :: head"></div>
+
+<body>
+	
+	<div id="page" class="theia-exception">
+
+		<div th:replace="fragments/general.html :: header"></div>
+		<!-- /header -->
+	
+	<main>
+		<section id="hero_in" class="general">
+			<div class="wrapper">
+				<div class="container">
+					<h1 class="fadeInUp"><span></span>Profile</h1>
+				</div>
+			</div>
+		</section>
+		<!--/hero_in-->
+		<div class="container margin_60_35">
+			<div class="row">
+				<aside class="col-lg-3" id="sidebar">
+					<div class="profile">
+						<figure><img  th:src="@{${'https://via.placeholder.com/150x150/212529/fff?text='+#strings.substring(member.firstName,0,1)}}"   alt="Teacher" class="rounded-circle"></figure>
+						<ul class="social_teacher">
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-linkedin"></i></a></li>
+							<li><a href="#"><i class="icon-email"></i></a></li>
+						</ul>
+						<ul>
+							
+							<li> <h5 align="center" th:text="${member.firstName}+ ' ' + ${member.lastName}"></h5></li>
+							<li>Modules enseignés <span class="float-right" th:text="${#lists.size(member.teachedModules)}"></span></li>
+						</ul>
+					</div>
+				</aside>
+				<!--/aside -->
+
+				<div class="col-lg-9">
+					<div class="box_teacher">
+						<!--<div class="indent_title_in">-->
+							<!--<i class="pe-7s-user"></i>-->
+							<!--<h3>Profile</h3>-->
+							<!--&lt;!&ndash;<p>Mussum ipsum cacilds, vidis litro abertis.</p>&ndash;&gt;-->
+						<!--</div>-->
+
+						<!--<hr class="styled_2">-->
+						<div class="indent_title_in">
+							<i class="pe-7s-display1"></i>
+							<h3>Modules Enseignés</h3>
+							<!--<p>Mussum ipsum cacilds, vidis litro abertis.</p>-->
+						</div>
+						<div class="wrapper_indent">
+							<!--<p>Mei ut decore accusam consequat, alii dignissim no usu. Phaedrum intellegat sit ut, no pri mutat eirmod. In eum iriure perpetua adolescens, pri dicunt prodesset et. Vis dicta postulant ad.</p>-->
+								<table class="table table-responsive table-striped add_bottom_30">
+									<thead>
+										<tr>
+											<th>Titre</th>
+											<th>Catégorie</th>
+											<th>Inscrits</th>
+											<th>Evaluation</th>
+										</tr>
+									</thead>
+									<tbody th:each="module: ${member.teachedModules}">
+										<tr>
+											<td th:text="${module.title}"></td>
+											<td th:text="${module.formation.category}"></td>
+											<td th:text="${#lists.size(module.formation.members)}"></td>
+											<td class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i> <i class="icon-star"></i></td>
+										</tr>
+									</tbody>
+								</table>
+						</div>
+						<!--wrapper_indent -->
+					</div>
+				</div>
+				<!-- /col -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</main>
+	<!--/main-->
+
+
+	<div th:replace="fragments/general.html :: footer"></div>
+	<!--/footer-->
+	</div>
+	<!-- page -->
+
+	<!-- COMMON SCRIPTS -->
+	<script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+	<script th:src="@{/js/common_scripts.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
+	<script th:src="@{/assets/validate.js}"></script>
+	
+</body>
+</html>

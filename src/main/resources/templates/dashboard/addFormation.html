@@ -13,14 +13,14 @@
   <div class="content-wrapper">
 
 <!-- formulaire d'ajout d'une formation************************************************************************* -->
-    <form th:action="@{/saveFormation}" method="post" >
+    <form th:action="@{../saveFormation}" method="post" >
     <div class="container-fluid">
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="#">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">Add listing</li>
+        <li class="breadcrumb-item active">Ajouter une formation</li>
       </ol>
 		<div class="box_general padding_bottom">
 			<div class="header_box version_2">
@@ -47,15 +47,7 @@
 				<div class="col-md-6">
 				</div>
 			</div>
-			<!-- /row-->
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-group">
-						<label>Teacher email</label>
-						<input type="text" class="form-control" placeholder="Course teacher" name="email" th:value="${member.email}"/>
-					</div>
-				</div>
-			</div>
+			
 
 		</div>
 		<!-- /box_general-->
