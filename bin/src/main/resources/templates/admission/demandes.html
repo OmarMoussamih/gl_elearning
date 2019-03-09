@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="fragments/general_dashboard.html :: head"></div>
+<!-- //head -->
+
+<body class="fixed-nav sticky-footer" id="page-top">
+  <!-- Navigation-->
+		<div th:replace="fragments/general_dashboard :: dashboard_nav"></div>
+	<!-- /Navigation-->
+	
+	
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Messages</li>
+      </ol>
+		<div class="box_general">
+			<h4 th:unless="${#lists.isEmpty(listeTeachers)}">Demandes :</h4>
+			<h2 align="center" style="padding-bottom:15px" th:if="${#lists.isEmpty(listeTeachers)}">Pas de demandes pour le moment <i class="fa fa-frown-o" aria-hidden="true"></i></h2>
+			<div class="list_general">
+<!-- ******************************************************************************************************* -->
+				<ul th:each="teacher:${listeTeachers}">
+					<li>
+						<figure><img th:src="@{${'https://via.placeholder.com/150x150/212529/fff?text='+#strings.substring(teacher.member.firstName,0,1)}}"  alt=""></figure>
+						<h4><label th:text="${teacher.member.lastName}"></label> <label th:text="${teacher.member.firstName}"></label><i class="unread">Unread</i></h4>
+						<p>Domaines :  <label th:text="${teacher.member.categories}"></label></p>
+						<p>Motivations :  <label th:text="${teacher.member.motivation}"></label> </p>
+						
+						<form th:action="@{/acceptation}" th:object="${teacher}" method="post" style="display: inline;">
+                             <input type="hidden" name="id" th:value="${teacher.id}" />
+                             <button type="submit" class="btn btn-success">Accepter</button>
+                        </form>
+                        <form th:action="@{/refus}" th:object="${teacher}" method="post" style="display: inline;">
+                             <input type="hidden" name="id" th:value="${teacher.id}" />
+                             <button type="submit" class="btn btn-danger">Refuser</button>
+                        </form>
+					</li>
+				</ul>
+<!-- ******************************************************************************************************* -->
+			</div>
+		</div>
+		<!-- /box_general-->
+	  </div>
+	  <!-- /container-fluid-->
+   	</div>
+    <!-- /container-wrapper-->
+    <div th:replace="fragments/general_dashboard :: dashboard_footer"></div>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+     <!-- Logout Modal-->
+	<div th:replace="fragments/general_dashboard :: logout_modal"></div>
+	
+   	
+	<!-- SCRIPTS -->
+	
+	 <!-- Bootstrap core JavaScript-->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <!-- Page level plugin JavaScript-->
+    <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+    <script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
+    <script th:src="@{/vendor/datatables/dataTables.bootstrap4.js}"></script>
+	<script th:src="@{/vendor/jquery.selectbox-0.2.js}"></script>
+	<script th:src="@{/vendor/retina-replace.min.js}"></script>
+	<script th:src="@{/vendor/jquery.magnific-popup.min.js}"></script>
+    <!-- Custom scripts for all pages-->
+    <script th:src="@{/js/admin.js}"></script>
+	<script type="text/javascript">
+		$('input.date-pick').datepicker();
+	</script>
+	<!-- SCRIPTS END-->
+	
+</body>
+</html>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- head -->
+<div th:replace="fragments/general.html :: head"></div>
+
+<body>
+	
+	<div id="page">
+		
+		<div th:replace="fragments/general.html :: header"></div>
+		<!-- /header -->
+		
+	
+	<main>
+		<section id="hero_in" class="contacts">
+			<div class="wrapper">
+				<div class="container">
+					<h1 class="fadeInUp"><span></span>Cours en Live</h1>
+				</div>
+			</div>
+		</section>
+		<!--/hero_in-->
+
+				<div class="container margin_60_35">
+			<div class="main_title_2">
+				<span><em></em></span>
+				<h2 th:text="${streaming.title}">Video Title</h2>
+				<p th:text="${streaming.module.title}">Video Time</p>
+				<SPAN th:text="${streaming.TimeStarted}"></SPAN>
+			</div>
+		</div>
+		<!-- /container -->
+
+		<div class="bg_color_1">
+			<div class="container margin_120_95">
+				<div class="embed-responsive embed-responsive-16by9">
+					<iframe class="embed-responsive-item"
+						th:src="|https://www.youtube.com/embed/${streaming.url}?autoplay=1&mute=1|"
+						allowfullscreen></iframe>
+				</div>
+				<hr>
+				<section id="comments">
+					<h2>Commentaires</h2>
+					<div class="reviews-container">
+						<div class="review-box clearfix">
+							<figure class="rev-thumb"><img src="http://via.placeholder.com/150x150/ccc/fff/avatar1.jpg" alt="">
+							</figure>
+							<div class="rev-content">
+								<div class="rev-info">
+									Admin – April 03, 2016:
+								</div>
+								<div class="rev-text">
+									<p>
+										Sed eget turpis a pede tempor malesuada. Vivamus quis mi at leo pulvinar hendrerit. Cum sociis natoque penatibus et magnis dis
+									</p>
+								</div>
+							</div>
+						</div>
+						<!-- /review-box -->
+						<div class="review-box clearfix">
+							<figure class="rev-thumb"><img src="http://via.placeholder.com/150x150/ccc/fff/avatar2.jpg" alt="">
+							</figure>
+							<div class="rev-content">
+								<div class="rev-info">
+									Ahsan – April 01, 2016:
+								</div>
+								<div class="rev-text">
+									<p>
+										Sed eget turpis a pede tempor malesuada. Vivamus quis mi at leo pulvinar hendrerit. Cum sociis natoque penatibus et magnis dis
+									</p>
+								</div>
+							</div>
+						</div>
+						<!-- /review-box -->
+						<div class="review-box clearfix">
+							<figure class="rev-thumb"><img src="http://via.placeholder.com/150x150/ccc/fff/avatar3.jpg" alt="">
+							</figure>
+							<div class="rev-content">
+								<div class="rev-info">
+									Sara – March 31, 2016:
+								</div>
+								<div class="rev-text">
+									<p>
+										Sed eget turpis a pede tempor malesuada. Vivamus quis mi at leo pulvinar hendrerit. Cum sociis natoque penatibus et magnis dis
+									</p>
+								</div>
+							</div>
+						</div>
+						<!-- /review-box -->
+						</div>
+						<!-- /review-container -->
+				</section>
+				
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /bg_color_1 -->
+	</main>
+	<!--/main-->
+	
+		<div th:replace="fragments/general.html :: footer"></div>
+		<!--/footer-->
+		
+	</div>
+	<!-- page -->
+	
+	<!-- COMMON SCRIPTS -->
+    <script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+    <script th:src="@{/js/common_scripts.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+	<script th:src="@{/assets/validate.js}"></script>
+	
+	<!-- SPECIFIC SCRIPTS -->
+	<script type="text/javascript" th:src="@{/js/mapmarker.jquery.js}"></script>
+	<script type="text/javascript" th:src="@{/js/mapmarker_func.jquery.js}"></script>
+</body>
+</html>

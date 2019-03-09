@@ -1,3 +1,17 @@
 /*============================================================================================*/
 /* Your custom styles below */
 /*============================================================================================*/
+
+.icon-youtube-4::before
+{
+	color: red;
+	font-size: large;
+	margin-right: auto !important;
+}
+
+.youtube-link
+{
+	color: red;
+	font-weight: bold;
+	text-decoration: underline;
+}

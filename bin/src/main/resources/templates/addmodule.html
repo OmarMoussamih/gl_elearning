@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Ajouter un module</title>
+</head>
+<body>
+	<p th:text="'id : ' + ${formation.id}"></p>
+	<p th:text="'title : '+${formation.title}"></p>
+	<p th:text="'category : '+${formation.category}"></p>
+	
+	<form th:action="@{/addModule}" th:object="${module}" method="post">
+	
+		<input type="text" th:field="*{title}" id="title" placeholder="Titre"/>
+		
+		<input type="text" th:field="*{description}" id="description" placeholder="Description"/>
+		
+		<input type="text" th:field="*{type}" id="type" placeholder="Type"/>  
+		
+		<select name="member_id">
+			<option th:each="member: ${members}" th:value="${member.id}" th:utext="${member.lastName}+' '+${member.firstName}"> </option>
+		</select>
+		
+		<input type="hidden" name="formation_id" th:value="${formation.id}"/>
+		
+		<input type="submit" value="Submit" />
+		<input type="reset" value="Reset"/>
+	</form>
+</body>
+</html>

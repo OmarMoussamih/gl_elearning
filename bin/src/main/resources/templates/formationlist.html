@@ -5,20 +5,21 @@
 <title>Liste des formations</title>
 </head>
 <body>
+	<h2>Formations</h2>
 	<table>
 		<tr>
-			<th>
-			formation id :
-			<th>
-			<th>
-			formation title :
-			<th>
+			<th>id</th>
+			<th>title</th>
+			<th>action</th>
 		</tr>
-		
+
 		<tr th:each="formation: ${formations}">
 			<td th:text="${formation.id}">
 			<td th:text="${formation.title}">
+			<td><a th:href="@{/formation/{id}(id=${formation.id})}">Voir
+					Plus</a></td>
 		</tr>
+
 	</table>
 </body>
 </html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- head -->
+<div th:replace="fragments/general.html :: head"></div>
+
+<body>
+	
+	<div id="page">
+		
+	<!-- header -->
+	<div th:replace="fragments/general.html :: header"></div>
+	<!-- /header -->
+	
+	<main>
+	<div id="error_page">
+			<div class="container">
+				<div class="row justify-content-center text-center">
+					<div class="col-xl-7 col-lg-9">
+						<h2>404 <i class="icon_error-triangle_alt"></i></h2>
+						<p>La page que vous recherchez n'existe pas.</p>
+						<form>
+							<div class="search_bar_error">
+								<input type="text" class="form-control" placeholder="Que cherchez-vous?">
+								<input type="submit" value="Chercher">
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /error_page -->
+	</main>
+	<!--/main-->
+	
+	<!--footer-->
+	<div th:replace="fragments/general.html :: footer"></div>
+	<!--/footer-->
+	</div>
+	<!-- page -->
+	
+	<!-- COMMON SCRIPTS -->
+	<script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+	<script th:src="@{/js/common_scripts.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
+	<script th:src="@{/assets/validate.js}"></script>
+	
+		
+</body>
+</html>

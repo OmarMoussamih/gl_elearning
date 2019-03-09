@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- head -->
+<div th:replace="fragments/general.html :: head"></div>
+
+
+<body id="admission_bg">
+
+	<div id="preloader">
+		<div data-loader="circle-side"></div>
+	</div>
+	<!-- End Preload -->
+
+	<div id="form_container" class="clearfix">
+		<figure>
+			<a th:href="@{/}"><img src="img/logo.png" width="149"
+				height="42" data-retina="true" alt=""></a>
+		</figure>
+		<div id="wizard_container">
+			<div id="top-wizard">
+				<div id="progressbar"></div>
+			</div>
+			<!-- /top-wizard -->
+			<!-- ******************************************************************************************************** -->
+			<form th:action="@{/saveAdmission}" method="post">
+
+				<!-- Leave for security protection, read docs for details -->
+				<div id="middle-wizard">
+					<div class="step">
+						<h3 class="main_question">
+							<strong>Entrez Plus de details</strong>
+						</h3>
+						<div class="form-group">
+							<input type="text" readonly="readonly" name="email" class="form-control required"
+								placeholder="email" th:field="*{member.email}" />
+						</div>
+						<h3 class="main_question">
+							<strong>Vos Motivations</strong>
+						</h3>
+						<div class="form-group add_top_30">
+							<textarea th:field="*{member.motivation}" name="additional_message"
+								id="motivation" class="form-control required"
+								style="height: 120px;" placeholder="Vos motivations... ici!"></textarea>
+						</div>
+						<h3 class="main_question">
+							<strong>Vos Préférences</strong>
+						</h3>
+						<div class="form-group select">
+							<select th:field="*{member.categories}" name="categories"
+								id="categories" class="selectpicker form-control" multiple
+								data-actions-box="true" data-live-search="true" data-size="5">
+								<option th:each="category : ${cats}" th:field="*{member.categories}"
+									th:value="${{category.id}}" th:utext="${category.name}">
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<!-- /middle-wizard -->
+				<div id="bottom-wizard">
+
+					<p>
+						<button type="submit" onclick="myFunction()" class="btn_1 medium">Envoyer</button>
+					</p>
+					<script>
+						function myFunction() {
+							alert("votre demande sera envoyée dans quelques instant");
+						}
+					</script>
+				</div>
+				<!-- /bottom-wizard -->
+			</form>
+			<!-- ****************************************************************************************************** -->
+		</div>
+		<!-- /Wizard container -->
+	</div>
+	<!-- /Form_container -->
+
+	
+
+	<!-- COMMON SCRIPTS -->
+	<script th:src="@{js/jquery-2.2.4.min.js}"></script>
+	<script th:src="@{js/common_scripts.js}"></script>
+	<script th:src="@{js/main_admission.js}"></script>
+	<script th:src="@{assets/validate.js}"></script>
+
+	<!-- SPECIFIC SCRIPTS -->
+	<script th:src="@{js/jquery-ui-1.8.22.min.js}"></script>
+	<script th:src="@{js/jquery.wizard.js}"></script>
+	<script th:src="@{js/jquery.validate.js}"></script>
+	<script th:src="@{js/admission_func.js}"></script>
+	
+	<!-- select js -->
+	<script th:src="@{/js/bootstrap-select.min.js}"></script>
+	
+	
+
+</body>
+</html>

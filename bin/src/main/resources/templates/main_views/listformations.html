@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- head -->
+<div th:replace="fragments/general.html :: head"></div>
+
+<body>
+	
+	<div id="page">
+		
+	<div th:replace="fragments/general.html :: header"></div>
+	<!-- /header -->
+	
+	<main>
+		<section id="hero_in" class="courses">
+			<div class="wrapper">
+				<div class="container">
+					<h1 class="fadeInUp"><span></span>Formations</h1>
+				</div>
+			</div>
+		</section>
+		<!--/hero_in-->
+
+
+<!-- ********************************************************************************************************* -->
+		<div class="container margin_60_35">
+<!-- ********************************************************************************************************* -->
+			<div class="box_list wow" th:each="formation:${listeFormations}">
+				<div class="row no-gutters">
+					<div class="col-lg-5">
+						<figure class="block-reveal">
+							<div class="block-horizzontal"></div>
+							<a th:href="@{/formation/{id}(id=${formation.id})}"><img th:src="@{${'https://via.placeholder.com/800x553/212529/fff?text='+formation.title}}"  class="img-fluid" alt=""></a>
+							<!-- <div class="preview"><span></span></div>  -->
+						</figure>
+					</div>
+					<div class="col-lg-7">
+						<div class="wrapper">
+							<div th:text="${formation.title}" class="price"></div>
+							<small>Category :  </small>
+							<h3 th:text="${formation.category}"></h3>
+							<p th:text="${formation.description}" ></p>
+							<div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></div>
+					   </div>
+						<ul>
+							<li><i class="icon_clock_alt"></i> <label th:text="${formation.creatingDate}"></label></li>
+							<li><a th:href="@{/formation/{id}(id=${formation.id})}">Voir Plus</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+<!-- ********************************************************************************************************* -->
+		<!-- /box_list -->
+		<p class="text-center add_top_60"><a href="#0" class="btn_1">Plus</a></p>
+		</div>
+<!-- ********************************************************************************************************* -->
+		
+		<!-- /container -->
+		<div class="bg_color_1">
+			<div class="container margin_60_35">
+				<div class="row">
+					<div class="col-md-4">
+						<a href="#0" class="boxed_list">
+							<i class="pe-7s-help2"></i>
+							<h4>Need Help? Contact us</h4>
+							<p>Cum appareat maiestatis interpretaris et, et sit.</p>
+						</a>
+					</div>
+					<div class="col-md-4">
+						<a href="#0" class="boxed_list">
+							<i class="pe-7s-wallet"></i>
+							<h4>Payments and Refunds</h4>
+							<p>Qui ea nemore eruditi, magna prima possit eu mei.</p>
+						</a>
+					</div>
+					<div class="col-md-4">
+						<a href="#0" class="boxed_list">
+							<i class="pe-7s-note2"></i>
+							<h4>Quality Standards</h4>
+							<p>Hinc vituperata sed ut, pro laudem nonumes ex.</p>
+						</a>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /bg_color_1 -->
+	</main>
+	<!--/main-->
+	
+	<div th:replace="fragments/general.html :: footer"></div>
+	<!--/footer-->
+	
+	</div>
+	<!-- page -->
+
+	<!-- COMMON SCRIPTS -->
+    <script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+    <script th:src="@{/js/common_scripts.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+	<script th:src="@{/assets/validate.js}"></script>
+  
+</body>
+</html>

@@ -1,29 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Inscription</title>
+<!-- head -->
+<div th:replace="fragments/general.html :: head"></div>
 
-    <!-- Favicons-->
-    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" type="image/x-icon" href="/img/apple-touch-icon-57x57-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="/img/apple-touch-icon-72x72-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="/img/apple-touch-icon-114x114-precomposed.png">
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="/img/apple-touch-icon-144x144-precomposed.png">
-
-    <!-- BASE CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
-	<link href="/css/vendors.css" rel="stylesheet">
-	<link href="/css/icon_fonts/css/all_icons.min.css" rel="stylesheet">
-
-    <!-- YOUR CUSTOM CSS -->
-    <link href="/css/custom.css" rel="stylesheet">
-
-</head>
 
 <body id="register_bg">
 	
@@ -39,39 +20,41 @@
 			<figure>
 				<a href="/"><img src="/img/logo.png" width="149" height="42" data-retina="true" alt=""></a>
 			</figure>
-			<form autocomplete="off">
+			<form autocomplete="off" th:action="@{/saveStudent}" method="post" th:object="${member}">
+				<div th:if="${flash!=null}" th:text="${flash}" class="alert alert-danger">
+				</div>
 				<div class="form-group">
 
 					<span class="input">
-					<input class="input_field" type="text">
+					<input class="input_field" type="text" th:field="*{firstName}" id="firstName"  >
 						<label class="input_label">
 						<span class="input__label-content">Your Name</span>
 					</label>
 					</span>
 
 					<span class="input">
-					<input class="input_field" type="text">
+					<input class="input_field" type="text" th:field="*{lastName}" id="lastName" >
 						<label class="input_label">
 						<span class="input__label-content">Your Last Name</span>
 					</label>
 					</span>
 
 					<span class="input">
-					<input class="input_field" type="email">
+					<input class="input_field" type="email" th:field="*{email}" id="email">
 						<label class="input_label">
 						<span class="input__label-content">Your Email</span>
 					</label>
 					</span>
 
 					<span class="input">
-					<input class="input_field" type="password" id="password1">
+					<input class="input_field" type="password"  th:field="*{password}" id="password1">
 						<label class="input_label">
 						<span class="input__label-content">Your password</span>
 					</label>
 					</span>
 
 					<span class="input">
-					<input class="input_field" type="password" id="password2">
+					<input class="input_field" type="password"> 
 						<label class="input_label">
 						<span class="input__label-content">Confirm password</span>
 					</label>
@@ -79,7 +62,9 @@
 					
 					<div id="pass-info" class="clearfix"></div>
 				</div>
-				<a href="#0" class="btn_1 rounded full-width add_top_30">S'INSCRIRE</a>
+				
+				<input type="submit" class="btn_1 rounded full-width add_top_30" value="S'INSCRIRE" /> 
+				
 				<div class="text-center add_top_10">Vous avez déjà un compte? <strong><a href="login">Se Connecter</a></strong></div>
 			</form>
 			<div class="copy">© 18-19 Challengers</div>
@@ -88,13 +73,13 @@
 	<!-- /login -->
 	
 	<!-- COMMON SCRIPTS -->
-    <script src="/js/jquery-2.2.4.min.js"></script>
-    <script src="/js/common_scripts.js"></script>
-    <script src="/js/main.js"></script>
-	<script src="/assets/validate.js"></script>
+	<script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+	<script th:src="@{/js/common_scripts.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
+	<script th:src="@{/assets/validate.js}"></script>
 	
 	<!-- SPECIFIC SCRIPTS -->
-	<script src="/js/pw_strenght.js"></script>
+	<script th:src="@{/js/pw_strenght.js}"></script>
   
 </body>
 </html>

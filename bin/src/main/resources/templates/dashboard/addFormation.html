@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="fragments/general_dashboard.html :: head"></div>
+<!-- //head -->
+
+
+<body class="fixed-nav sticky-footer" id="page-top">
+	<!-- Navigation-->
+		<div th:replace="fragments/general_dashboard :: dashboard_nav"></div>
+	<!-- /Navigation-->
+  <div class="content-wrapper">
+
+<!-- formulaire d'ajout d'une formation************************************************************************* -->
+    <form th:action="@{../saveFormation}" method="post" >
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Ajouter une formation</li>
+      </ol>
+		<div class="box_general padding_bottom">
+			<div class="header_box version_2">
+				<h2><i class="fa fa-file"></i>Basic info</h2>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Course title</label>
+						<input type="text" class="form-control" placeholder="Course title" name="title" th:value="${formation.title}"/>
+					</div>
+				</div>
+				<div class="col-md-6">
+				</div>
+			</div>
+			<!-- /row-->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">			
+						<label>Course start</label>
+					<p><input type="text"  class="form-control date-pick" autocomplete="off" placeholder="Début du formation" name="creatingDate" th:value="${formation.creatingDate}" /></p>
+					</div>
+				</div>
+				<div class="col-md-6">
+				</div>
+			</div>
+			
+
+		</div>
+		<!-- /box_general-->
+		
+		<div class="box_general padding_bottom">
+			<div class="header_box version_2">
+				<h2><i class="fa fa-file-text"></i>Description</h2>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label>Course description</label>
+						<textarea rows="5" class="form-control" style="height:100px;" placeholder="Description" name="description" th:value="${formation.description}"></textarea>
+					</div>
+				</div>
+			</div>
+			<!-- /row-->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label>Category <a href="#0" data-toggle="tooltip" data-placement="top" title="Separated by commas"><i class="fa fa-fw fa-question-circle"></i></a></label>
+						<input type="text" class="form-control" placeholder="Ex: Science, Biology..." name="category" th:value="${formation.category}"/>
+					</div>
+				</div>
+			</div>
+			<!-- /row-->
+		</div>
+<!-- ************************************************************************************************* -->
+		
+<!-- ********************************************************************************************************** -->
+		<!-- /box_general-->
+		<p><button type="submit" class="btn_1 medium">save</button></p>
+	  </div>
+	  		</form>
+	  
+<!-- *********************************************************************************************************** -->
+	  <!-- /.container-fluid-->
+   	</div>
+    <!-- /.container-wrapper-->
+    <div th:replace="fragments/general_dashboard :: dashboard_footer"></div>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <!-- Logout Modal-->
+	<div th:replace="fragments/general_dashboard :: logout_modal"></div>
+	
+	<!-- JS SCRIPTS -->
+	
+    <!-- Bootstrap core JavaScript-->
+	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<!-- Core plugin JavaScript-->
+	<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+	<!-- Page level plugin JavaScript-->
+	<script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+	<script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
+	<script th:src="@{/vendor/datatables/dataTables.bootstrap4.js}"></script>
+	<script th:src="@{/vendor/jquery.selectbox-0.2.js}"></script>
+	<script th:src="@{/vendor/retina-replace.min.js}"></script>
+	<script th:src="@{/vendor/jquery.magnific-popup.min.js}"></script>
+	<!-- Custom scripts for all pages-->
+	<script th:src="@{/js/admin.js}"></script>
+
+	<!-- select js -->
+	<script th:src="@{/js/bootstrap-select.min.js}"></script>
+
+
+	<!-- Custom scripts for this page-->
+	<script th:src="@{/vendor/dropzone.min.js}"></script>
+	<script th:src="@{/vendor/bootstrap-datepicker.js}"></script>
+	<script type="text/javascript">
+		$('input.date-pick').datepicker();
+	</script>
+
+	
+	
+</body>
+</html>

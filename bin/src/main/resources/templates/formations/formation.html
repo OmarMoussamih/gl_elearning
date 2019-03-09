@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- head -->
+<div th:replace="fragments/general.html :: head"></div>
+
+
+<body>
+	
+	<div id="page" class="theia-exception">
+		
+	<div th:replace="fragments/general.html :: header"></div>
+		<!-- /header -->
+	
+	<main>
+		<section id="hero_in" class="courses">
+			<div class="wrapper">
+				<div class="container">
+					<h1 class="fadeInUp"><span></span>Détails du formation</h1>
+				</div>
+			</div>
+		</section>
+		<!--/hero_in-->
+
+		<div class="bg_color_1">
+			<nav class="secondary_nav sticky_horizontal">
+				<div class="container">
+					<ul class="clearfix">
+						<li><a href="#description" class="active">Description</a></li>
+						<li><a href="#lessons">Modules</a></li>
+						<li><a href="#reviews">Reviews</a></li>
+					</ul>
+				</div>
+			</nav>
+			<div class="container margin_60_35">
+				<div class="row">
+					<div class="col-lg-8">
+						
+						<section id="description">
+							<h2 th:text="'Description du Formation '+${formation.title}"></h2>
+							<p>Per consequat adolescens ex, cu nibh commune temporibus vim, ad sumo viris eloquentiam sed. Mea appareat omittantur eloquentiam ad, nam ei quas oportere democritum. Prima causae admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis vel ut. An sit illum euismod facilisis, tamquam vulputate pertinacia eum at.</p>
+							
+						</section>
+						<!-- /section -->
+						
+						<section id="lessons">
+							<div class="intro_title">
+								<h2>Modules</h2>
+								<ul>
+									<li th:inline="text"> [[${#lists.size(formation.modules)}]] Modules</li>
+								</ul>
+							</div>
+							<div id="accordion_lessons" role="tablist" class="add_bottom_45">
+								<div th:each="module : ${formation.modules}" class="card">
+									<div class="card-header" role="tab" th:id="'heading'+${module.id}">
+										<h5 class="mb-0">
+											<a th:inline="text" class="collapsed" data-toggle="collapse" th:href="'#collapse'+${module.id}" aria-expanded="false" th:aria-controls="'collapse'+${module.id}"><i class="indicator ti-plus"></i> [[${module.title}]] </a>
+										</h5>
+									</div>
+
+									<div th:id="'collapse'+${module.id}" class="collapse" role="tabpanel" th:aria-labelledby="'heading'+${module.id}" data-parent="#accordion_lessons">
+										<div class="card-body">
+											<div class="list_lessons">
+											<ul>
+												<li th:text="'Description : '+${module.description}"></li>
+												<li th:text="'Type : '+${module.type}"></li>
+												<li>
+													Enseignant :<a th:href="@{|/teacher/${module.teacher.id}|}" th:text="' ' + ${module.teacher}"></a>
+												</li>							
+					
+											</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- /card -->
+								
+							</div>
+							<!-- /accordion -->
+						</section>
+						<!-- /section -->
+						
+						<section id="reviews">
+							<h2>Reviews</h2>
+							<div class="reviews-container">
+								<div class="row">
+									<div class="col-lg-3">
+										<div id="review_summary">
+											<strong>4.7</strong>
+											<div class="rating">
+												<i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+											</div>
+											<small>Based on 4 reviews</small>
+										</div>
+									</div>
+									<div class="col-lg-9">
+										<div class="row">
+											<div class="col-lg-10 col-9">
+												<div class="progress">
+													<div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</div>
+											<div class="col-lg-2 col-3"><small><strong>5 stars</strong></small></div>
+										</div>
+										<!-- /row -->
+										<div class="row">
+											<div class="col-lg-10 col-9">
+												<div class="progress">
+													<div class="progress-bar" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</div>
+											<div class="col-lg-2 col-3"><small><strong>4 stars</strong></small></div>
+										</div>
+										<!-- /row -->
+										<div class="row">
+											<div class="col-lg-10 col-9">
+												<div class="progress">
+													<div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</div>
+											<div class="col-lg-2 col-3"><small><strong>3 stars</strong></small></div>
+										</div>
+										<!-- /row -->
+										<div class="row">
+											<div class="col-lg-10 col-9">
+												<div class="progress">
+													<div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</div>
+											<div class="col-lg-2 col-3"><small><strong>2 stars</strong></small></div>
+										</div>
+										<!-- /row -->
+										<div class="row">
+											<div class="col-lg-10 col-9">
+												<div class="progress">
+													<div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</div>
+											<div class="col-lg-2 col-3"><small><strong>1 stars</strong></small></div>
+										</div>
+										<!-- /row -->
+									</div>
+								</div>
+								<!-- /row -->
+							</div>
+
+							<hr>
+
+							<div class="reviews-container">
+
+								<div class="review-box clearfix">
+									<figure class="rev-thumb"><img src="http://via.placeholder.com/150x150/ccc/fff/avatar1.jpg" alt="">
+									</figure>
+									<div class="rev-content">
+										<div class="rating">
+											<i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+										</div>
+										<div class="rev-info">
+											Admin – April 03, 2016:
+										</div>
+										<div class="rev-text">
+											<p>
+												Sed eget turpis a pede tempor malesuada. Vivamus quis mi at leo pulvinar hendrerit. Cum sociis natoque penatibus et magnis dis
+											</p>
+										</div>
+									</div>
+								</div>
+								<!-- /review-box -->
+								<div class="review-box clearfix">
+									<figure class="rev-thumb"><img src="http://via.placeholder.com/150x150/ccc/fff/avatar2.jpg" alt="">
+									</figure>
+									<div class="rev-content">
+										<div class="rating">
+											<i class="icon-star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+										</div>
+										<div class="rev-info">
+											Ahsan – April 01, 2016:
+										</div>
+										<div class="rev-text">
+											<p>
+												Sed eget turpis a pede tempor malesuada. Vivamus quis mi at leo pulvinar hendrerit. Cum sociis natoque penatibus et magnis dis
+											</p>
+										</div>
+									</div>
+								</div>
+								<!-- /review-box -->
+								<div class="review-box clearfix">
+									<figure class="rev-thumb"><img src="http://via.placeholder.com/150x150/ccc/fff/avatar3.jpg" alt="">
+									</figure>
+									<div class="rev-content">
+										<div class="rating">
+											<i class="icon-star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+										</div>
+										<div class="rev-info">
+											Sara – March 31, 2016:
+										</div>
+										<div class="rev-text">
+											<p>
+												Sed eget turpis a pede tempor malesuada. Vivamus quis mi at leo pulvinar hendrerit. Cum sociis natoque penatibus et magnis dis
+											</p>
+										</div>
+									</div>
+								</div>
+								<!-- /review-box -->
+							</div>
+							<!-- /review-container -->
+						</section>
+						<!-- /section -->
+					</div>
+					<!-- /col -->
+					
+					<aside class="col-lg-4" id="sidebar">
+						<div class="box_detail">
+							<figure>
+							
+								<img th:src="@{${'https://via.placeholder.com/800x533/662d91/fff?text='+formation.title}}" alt="" class="img-fluid">
+							</figure>
+							<div th:if="${flash!=null}" class="alert alert-warning" role="alert">Vous devriez vous connecter d'abord, <strong><a th:href="@{/login}">Se Connecter</a></strong></div>
+							<a th:if="${inscription}==false" th:href="@{/formation/{id}/follow(id=${formation.id})}" class="btn_1 full-width">S'INSCRIRE</a>
+							<div th:if="${inscription}==true" class="alert alert-info" role="alert"><strong>Inscrit!</strong> Vous êtes déjà inscrit dans cette formation.</div>
+							<div id="list_feat">
+								<h3>What's includes</h3>
+								<ul>
+									<li><i class="icon_mobile"></i>Mobile support</li>
+									<li><i class="icon_mobile"></i>Mobile support</li>
+									<li><i class="icon_chat_alt"></i>Tutor chat</li>
+									<li><i class="icon_document_alt"></i>Course certificate</li>
+								</ul>
+							</div>
+						</div>
+					</aside>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /bg_color_1 -->
+	</main>
+	<!--/main-->
+	
+	<div th:replace="fragments/general.html :: footer"></div>
+	<!--/footer-->
+		
+	</div>
+	<!-- page -->
+	
+	<!-- COMMON SCRIPTS -->
+    <script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+    <script th:src="@{/js/common_scripts.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+	<script th:src="@{/assets/validate.js}"></script>
+	
+  
+</body>
+</html>
