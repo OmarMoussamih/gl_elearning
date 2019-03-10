@@ -1,1 +1,1 @@
-web: java -jar target/gl_elearning.jar
+web: java -jar target/prj1-0.0.1-SNAPSHOT.jar
