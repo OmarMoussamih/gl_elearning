@@ -1,1 +1,1 @@
-web: java -cp target/classes/:target/dependency/* com.wedevol.xmpp.EntryPoint
+web: java -jar target/prj1-0.0.1-SNAPSHOT.jar
